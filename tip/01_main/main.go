@@ -90,13 +90,13 @@ import (
 /*func main() {
 	sig := make(chan os.Signal)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGKILL)
-	ctx, cancel := context.WithCancel(context.Background())
+	gorouting, cancel := 01_context.WithCancel(01_context.Background())
 	finishedCh := make(chan struct{})
 
-	go func(ctx context.Context, finishedCh chan struct{}) {
+	go func(gorouting 01_context.Context, finishedCh chan struct{}) {
 		for {
 			select {
-			case <-ctx.Done():
+			case <-gorouting.Done():
 				// 结束后，通过ch通知主goroutine
 				fmt.Println("stopped")
 				finishedCh <- struct{}{}
@@ -105,7 +105,7 @@ import (
 				time.Sleep(time.Second)
 			}
 		}
-	}(ctx, finishedCh)
+	}(gorouting, finishedCh)
 
 	<-sig
 	cancel()
