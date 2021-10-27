@@ -1,1 +1,2 @@
-package _3_speedOfRangAndFor
+package main
+
