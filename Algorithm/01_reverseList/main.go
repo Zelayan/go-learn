@@ -3,7 +3,6 @@ package main
 import "fmt"
 
 // Definition for singly-linked list.
-
 func maxProfit( prices []int ) int {
 	// write code here
 	min := prices[0]
