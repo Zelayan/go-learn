@@ -16,7 +16,7 @@ func func2(ctx context.Context) {
 	fmt.Println(ctx.Value("k1").(string))
 }
 
-func main() {
+func test() {
 	ctx := context.Background()
 	func1(ctx)
 }

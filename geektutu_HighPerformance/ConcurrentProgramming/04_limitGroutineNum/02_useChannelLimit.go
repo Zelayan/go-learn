@@ -1,4 +1,4 @@
-package main
+package limitgroutinenum
 
 import (
 	"fmt"
@@ -7,11 +7,11 @@ import (
 	"time"
 )
 
-func main() {
+func Limitgroutinenum2() {
 	var wg sync.WaitGroup
 	ch := make(chan struct{}, 3)
-    errorChan := make(chan error)
-	for i :=0; i < 10; i++ {
+	errorChan := make(chan error)
+	for i := 0; i < 10; i++ {
 		ch <- struct{}{}
 		go func(i int) {
 			handleIterm(i, ch, errorChan, &wg)
@@ -22,7 +22,7 @@ func main() {
 	go func() {
 		for {
 			select {
-			case c, ok := <- errorChan:
+			case c, ok := <-errorChan:
 				if ok {
 					fmt.Println(c.Error())
 				} else {
@@ -44,13 +44,13 @@ func handleIterm(item int, ch chan struct{}, errorChan chan error, wg *sync.Wait
 		group.Done()
 		if p := recover(); p != nil {
 			errs := fmt.Errorf("go routine error %v", p)
-            errorChan <- errs
+			errorChan <- errs
 		}
 
 	}(wg)
 	time.Sleep(time.Second)
 	log.Println("item is : ", item)
-	<- ch
+	<-ch
 	panic("error ...")
 
 	return 1, err

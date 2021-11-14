@@ -1,4 +1,4 @@
-package main
+package limitgroutinenum
 
 import (
 	"math"
@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func main() {
+func Limitgroutinenum() {
 	var wg sync.WaitGroup
 	for i := 0; i < math.MaxInt32; i++ {
 		wg.Add(1)
