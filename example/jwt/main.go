@@ -16,8 +16,6 @@ import (
 
 var (
 	router = gin.Default()
-
-
 )
 
 func main() {
@@ -67,7 +65,6 @@ func Login(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, tokens)
 }
-
 
 func CreateToken(userid uint64) (*TokenDetails, error) {
 	td := &TokenDetails{}
@@ -301,32 +298,4 @@ func Refresh(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusUnauthorized, "refresh expired")
 	}
-}
-
-
-
-type AccessDetails struct {
-	AccessUuid string
-	UserId   uint64
-}
-
-
-type Todo struct {
-	UserID uint64 `json:"user_id"`
-	Title string `json:"title"`
-}
-
-
-
-type User struct {
-	ID       uint64 `json:"id"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
-//A sample use
-var user = User{
-	ID:       1,
-	Username: "username",
-	Password: "password",
 }
