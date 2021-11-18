@@ -11,12 +11,12 @@ type TokenDetails struct {
 
 type AccessDetails struct {
 	AccessUuid string
-	UserId   uint64
+	UserId     uint64
 }
 
 type Todo struct {
 	UserID uint64 `json:"user_id"`
-	Title string `json:"title"`
+	Title  string `json:"title"`
 }
 
 type User struct {

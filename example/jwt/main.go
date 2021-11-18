@@ -38,7 +38,6 @@ func TokenAuthMiddleware() gin.HandlerFunc {
 	}
 }
 
-
 func Login(c *gin.Context) {
 	var u User
 	if err := c.ShouldBindJSON(&u); err != nil {
@@ -127,7 +126,6 @@ func ExtractToken(r *http.Request) string {
 	return ""
 }
 
-
 func VerifyToken(r *http.Request) (*jwt.Token, error) {
 	tokenString := ExtractToken(r)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -154,7 +152,6 @@ func TokenValid(r *http.Request) error {
 	return nil
 }
 
-
 func ExtractTokenMetadata(r *http.Request) (*AccessDetails, error) {
 	token, err := VerifyToken(r)
 	if err != nil {
@@ -172,7 +169,7 @@ func ExtractTokenMetadata(r *http.Request) (*AccessDetails, error) {
 		}
 		return &AccessDetails{
 			AccessUuid: accessUuid,
-			UserId:   userId,
+			UserId:     userId,
 		}, nil
 	}
 	return nil, err
@@ -224,7 +221,7 @@ func Logout(c *gin.Context) {
 	c.JSON(http.StatusOK, "Successfully logged out")
 }
 
-func DeleteAuth(givenUuid string) (int64,error) {
+func DeleteAuth(givenUuid string) (int64, error) {
 	deleted, err := client.Del(context.Background(), givenUuid).Result()
 	if err != nil {
 		return 0, err
@@ -280,7 +277,7 @@ func Refresh(c *gin.Context) {
 		}
 		//Create new pairs of refresh and access tokens
 		ts, createErr := CreateToken(userId)
-		if  createErr != nil {
+		if createErr != nil {
 			c.JSON(http.StatusForbidden, createErr.Error())
 			return
 		}
