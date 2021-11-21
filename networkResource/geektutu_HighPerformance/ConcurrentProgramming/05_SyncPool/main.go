@@ -25,9 +25,11 @@ var studentPool = sync.Pool{
 	},
 }
 
-func main() {
+func Usage01() {
 	student := studentPool.Get().(*Student)
 	json.Unmarshal(buf, student)
 	// Put 是在对象使用完毕后，返回对象池。
 	studentPool.Put(student)
 }
+
+
