@@ -1,4 +1,4 @@
-// runtime_pprof/main.go
+// runtime_pprof/http-proxy.go
 package main
 
 import (
