@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  prom:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: always
+    volumes:
+      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ${PWD}/rules.yml:/etc/prometheus/rules.yml:ro
+      - prom_data:/prometheus
+    ports:
+      - 9090:9090
+    command:
+      - '--enable-feature=remote-write-receiver'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  alertmanager:
+    image: prom/alertmanager
+    container_name: alertmanager
+    volumes:
+      - ${PWD}/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    ports:
+      - 9093:9093
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  node_exporter:
+    image: carlosedp/node-exporter:latest
+    container_name: node_exporter
+    restart: always
+    ports:
+      - "9100:9100"
+volumes:
+  test_data:
+  prom_data:
+networks:
+  default:
+    external: true
+    name: qzsec-net

@@ -1,0 +1,59 @@
+# my global config
+global:
+  external_labels:
+    region: "test"
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - scheme: http
+    - static_configs:
+        - targets:
+           - alertmanager:9093
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+   - "/etc/prometheus/rules.yml"
+# - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: "node_exporter"
+    static_configs:
+      - targets: ["host.docker.internal:9100"]
+  - job_name: "cadvisor"
+    static_configs:
+      - targets: [ "host.docker.internal:8080" ]
+  - job_name: 'eureka'
+    eureka_sd_configs:
+      # 指定 eureka 的服务发现地址
+      - server: 'http://host.docker.internal:8761/eureka'
+    relabel_configs:
+      # 重写 metrics 的路径
+      - source_labels: ["__meta_eureka_app_instance_metadata_prometheus_path"]
+        action: replace
+        target_label: __metrics_path__
+        regex: (.+)
+        # 增加一个自定义label service 它的值从配置eureka中获取
+      - source_labels: ["__meta_eureka_app_instance_metadata_service"]
+        action: replace
+        target_label: service
+        regex: (.+)
+        # 重写管理端口
+      - source_labels: [__address__, __meta_eureka_app_instance_metadata_prometheus_port]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:$2
+        target_label: __address__
+
