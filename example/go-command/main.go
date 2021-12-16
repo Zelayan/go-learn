@@ -16,7 +16,7 @@ func main() {
 	//获取命令行中输入的参数和对应的值
 	//第一个参数，为参数名称，第二个参数为默认值，第三个参数是说明
 	//containerlist := flag.String("list", "", "get all container")
-	container := flag.String("get", "", "get container log")
+	container := flag.String("get", "", "get container nglog")
 	flag.Parse() //从os.Args[1:]中解析注册的flag
 
 
@@ -32,7 +32,7 @@ func main() {
 }
 
 func getLog(container *string) {
-	fmt.Println("get log")
+	fmt.Println("get nglog")
 	command := exec.Command("./logcli", "get al2l")
 
 	// set var to get the output

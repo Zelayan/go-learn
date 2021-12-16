@@ -11,9 +11,9 @@ import (
 
 func main() {
 	http.HandleFunc("/hello", helloHandler)
-	//log.Fatal(http.ListenAndServe(":8080", nil))
+	//nglog.Fatal(http.ListenAndServe(":8080", nil))
 	// with tls
-	//log.Fatal(http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", nil))
+	//nglog.Fatal(http.ListenAndServeTLS(":8443", "cert.pem", "key.pem", nil))
 	// Create a CA certificate pool and add cert.pem to i
 	caCert, err := ioutil.ReadFile("cert.pem")
 	if err != nil {
