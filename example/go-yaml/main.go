@@ -10,6 +10,10 @@ import (
 func main() {
 	data, _ := ioutil.ReadFile("docker-compose.yml")
 
+	list, _ := ioutil.ReadDir(".")
+
+	fmt.Println(list)
+
 	m := make(map[interface{}]interface{})
 
 	err := yaml.Unmarshal(data, &m)
@@ -26,7 +30,7 @@ func main() {
 
 }
 
-//
+// HandlerInterfaceMapping
 func HandlerInterfaceMapping(res interface{}) (tmp map[string]interface{}) {
 	// map 需要初始化一个出来
 	tmp = make(map[string]interface{})
