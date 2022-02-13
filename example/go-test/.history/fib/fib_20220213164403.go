@@ -1,0 +1,3 @@
+package fib
+
+import "package"

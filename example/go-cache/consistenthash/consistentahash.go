@@ -1,4 +1,4 @@
-package consistentahash
+package consistenthash
 
 import (
 	"hash/crc32"
@@ -29,7 +29,6 @@ func New(replicas int, fn Hash) *Map {
 	}
 	return m
 }
-
 
 // Add adds some keys to the hash.
 func (m *Map) Add(keys ...string) {

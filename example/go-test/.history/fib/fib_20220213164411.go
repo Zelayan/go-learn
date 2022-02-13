@@ -1,0 +1,3 @@
+package fib
+
+func Fib
