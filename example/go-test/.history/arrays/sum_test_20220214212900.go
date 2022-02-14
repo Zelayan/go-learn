@@ -1,9 +1,6 @@
 package arrays
 
-import (
-	"reflect"
-	"testing"
-)
+import "testing"
 
 
 func TestSum(t *testing.T) {
@@ -27,14 +24,5 @@ func TestSum(t *testing.T) {
 }
 
 func TestSumAll(t *testing.T) {
-	got := SumAll([]int{1, 2, 3}, []int{2, 3})
-	want := []int{6, 5}
-	// Go语言中不对切片进行等号运算符
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("got %d want %d", got, want)
-	}
-}
-
-func TestSumTails(t *testing.T) {
-	got := SumTails([]int{1, 2}, [])
+	got := SumAll([]int{1, 2, 3},)
 }

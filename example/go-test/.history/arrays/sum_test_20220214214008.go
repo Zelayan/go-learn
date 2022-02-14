@@ -34,7 +34,3 @@ func TestSumAll(t *testing.T) {
 		t.Errorf("got %d want %d", got, want)
 	}
 }
-
-func TestSumTails(t *testing.T) {
-	got := SumTails([]int{1, 2}, [])
-}

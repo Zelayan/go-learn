@@ -36,5 +36,5 @@ func TestSumAll(t *testing.T) {
 }
 
 func TestSumTails(t *testing.T) {
-	got := SumTails([]int{1, 2}, [])
+	
 }
