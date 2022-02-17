@@ -3,6 +3,8 @@ package arrays
 import (
 	"reflect"
 	"testing"
+
+	"github.com/influxdata/influxdb/kit/check"
 )
 
 
@@ -36,11 +38,12 @@ func TestSumAll(t *testing.T) {
 }
 
 func TestSumTails(t *testing.T) {
+
+	checkNums := func ()  {
+		
+	}
 	got := SumTails([]int{1, 2}, []int{2, 3})
 	want := []int{2, 3}
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("got %d want %d", got, want)
-	}
 
 
 	t.Run("empty slice", func(t *testing.T) {

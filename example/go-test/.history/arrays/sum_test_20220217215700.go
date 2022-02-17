@@ -39,16 +39,6 @@ func TestSumTails(t *testing.T) {
 	got := SumTails([]int{1, 2}, []int{2, 3})
 	want := []int{2, 3}
 	if !reflect.DeepEqual(got, want) {
-		t.Errorf("got %d want %d", got, want)
+		t.Errorf("got %d want %d")
 	}
-
-
-	t.Run("empty slice", func(t *testing.T) {
-		got := SumTails([]int{}, []int{2, 3})
-		want := []int{0, 3}
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("got %d want %d", got, want)
-		}
-	
-	})
 }
