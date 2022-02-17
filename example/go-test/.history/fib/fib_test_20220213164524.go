@@ -1,3 +1,0 @@
-package fib
-
-t

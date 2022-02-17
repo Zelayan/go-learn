@@ -1,3 +1,0 @@
-package integer
-
-func Add

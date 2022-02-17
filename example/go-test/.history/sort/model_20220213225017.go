@@ -1,3 +1,0 @@
-package sort
-
-type ModelA 
