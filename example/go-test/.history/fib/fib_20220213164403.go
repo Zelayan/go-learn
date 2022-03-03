@@ -1,3 +1,0 @@
-package fib
-
-import "package"

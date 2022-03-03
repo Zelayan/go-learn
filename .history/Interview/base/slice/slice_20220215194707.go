@@ -1,0 +1,3 @@
+package slice
+
+func TwoArray()
