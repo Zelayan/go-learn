@@ -9,11 +9,12 @@ import (
 
 func Deploy() error {
 
-	deployDone := make(chan struct{}, 1)
-	runShDone := make(chan struct{}, 1)
+	deployDone := make(chan struct{})
+	runShDone := make(chan struct{})
 
 	go subscribe(deployDone)
-	go runShDoneFun(runShDone)
+	time.Sleep(5 * time.Second)
+	runShDone <- struct{}{}
 
 	select {
 	case <-deployDone:
@@ -25,8 +26,6 @@ func Deploy() error {
 	}
 
 }
-
-
 
 func NewRedisClient() (*redis.Client, error) {
 	client := redis.NewClient(&redis.Options{Addr: "localhost:6379"})
@@ -46,7 +45,7 @@ func subscribe(ch chan struct{}) {
 
 	client, _ := NewRedisClient()
 	defer client.Close()
-	sub := client.Subscribe(context.TODO(), "test")
+	sub := client.Subscribe(context.TODO(), "deploy")
 	_, err := sub.ReceiveMessage(context.TODO())
 
 	if err != nil {
@@ -57,10 +56,4 @@ func subscribe(ch chan struct{}) {
 		fmt.Println(m)
 		ch <- struct{}{}
 	}
-
-}
-
-func runShDoneFun(ch chan struct{}) {
-	time.Sleep(10 * time.Second)
-	ch <- struct{}{}
 }
