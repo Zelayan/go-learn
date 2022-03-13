@@ -18,18 +18,20 @@ func TestInitTable(t *testing.T) {
 	err = d.InitTable()
 	check.Nil(err)
 	err = d.Create(&User{
-		ID:       1,
+		ID:       10,
 		Name:     "xx",
 		Age:      0,
 		Birthday: time.Time{},
 	})
 	check.Nil(err)
+
+
 }
 
 
 func TestSync(t *testing.T) {
 
-	output, err := exec.Command("/bin/bash", "-c", "sqlite3  new.db < tt.sql").Output()
+	output, err := exec.Command("/bin/bash", "-c", "sqlite3  watch.db ").Output()
 	if err != nil {
 		t.Error(err)
 	}
