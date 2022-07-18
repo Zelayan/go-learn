@@ -1,5 +1,0 @@
-package slice
-
-func TwoArray() {
-	
-}
