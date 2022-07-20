@@ -1,3 +1,0 @@
-package map
-
-func RangeMap
