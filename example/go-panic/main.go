@@ -63,8 +63,7 @@ func doRecover() {
 	panic("it is panic") // not recover
 }*/
 
-func main() {
-
+func main2() {
 	go test()
 	fmt.Println("main done")
 }
