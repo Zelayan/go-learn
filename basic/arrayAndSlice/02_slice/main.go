@@ -10,3 +10,19 @@ func main() {
 	fmt.Printf("dnums: %v", dnums)
 
 }
+
+func initSlice() {
+	s := make([]int, 10)
+    s = append(s, 1, 2, 3)
+    fmt.Println(s)
+	// [0 0 0 0 0 0 0 0 0 0 1 2 3]
+}
+
+func newSlice() {
+
+	list := new([]int)
+	// 会报错，
+	//list = append(list, 1)
+	*list = append(*list, 1)
+	fmt.Println(list)
+}
