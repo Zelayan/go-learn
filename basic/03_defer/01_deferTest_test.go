@@ -44,5 +44,20 @@ func Test_panic2(t *testing.T) {
 // 压zhan
 func Test_functionInDefer(t *testing.T) {
 	defer function(1, function(3, 0))
-    defer function(2, function(4, 0))
+	defer function(2, function(4, 0))
+}
+
+func Test_deferWithPanic(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		{
+			"succes",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			deferWithPanic()
+		})
+	}
 }

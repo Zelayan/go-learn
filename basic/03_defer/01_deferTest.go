@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 func main()  {
 	fmt.Println("f1 result: ", f1())
@@ -119,4 +122,19 @@ func function(index int, value int) int {
     fmt.Println(index)
 
     return index
+}
+
+
+func deferWithPanic() {
+	a, err := panicE()
+	if err != nil {
+		panic(err)
+	}
+	defer func ()  {
+		fmt.Println("----"+a)	
+	}()
+}
+
+func panicE() (string, error) {
+	return "123", errors.New("xx")
 }
