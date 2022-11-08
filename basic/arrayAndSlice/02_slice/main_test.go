@@ -29,3 +29,16 @@ func Test_newSlice(t *testing.T) {
 		})
 	}
 }
+
+func Test_nilSlice(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		{name: "succes"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			nilSlice()
+		})
+	}
+}
