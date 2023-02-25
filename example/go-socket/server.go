@@ -1,4 +1,4 @@
-package go_socket
+package main
 
 import (
 	"bufio"
@@ -8,22 +8,60 @@ import (
 	"strings"
 )
 
+type Process func(conn net.Conn)
+
+// 利用socket连接自己封装处理HTTP
+func processHttp(conn net.Conn) {
+	defer conn.Close()
+
+	fmt.Printf("client addr: %s\n", conn.RemoteAddr())
+
+	reader := bufio.NewReader(conn)
+
+	var buf [1024]byte
+	n, err := reader.Read(buf[:])
+	if err != nil {
+		fmt.Printf("read from conn failed, err:%v\\n", err)
+		return
+	}
+	rev := string(buf[:n])
+
+	//fmt.Printf("recived: %v\n", rev)
+
+	header := strings.Split(rev, "\r\n")
+	path := strings.Split(header[0], " ")
+
+	//fmt.Printf("path: %s", path[0])
+
+	response := []byte("HTTP/1.0 200 OK\r\n\r\n")
+
+	file, err := os.ReadFile(fmt.Sprintf("%s.go", path[1]))
+	if err != nil {
+		response = []byte("HTTP/1.1 404 Not Found\r\n\r\nfile not found")
+	} else {
+		response = append(response, file...)
+	}
+	conn.Write(response)
+
+}
+
+// TCP处理客户端请求
 func process(conn net.Conn) {
 	// 处理完关闭连接
 	defer conn.Close()
 
+	fmt.Printf("client addr: %s\n", conn.RemoteAddr())
 	// 针对当前连接做发送和接受操作
 	for {
 		reader := bufio.NewReader(conn)
-		var buf [128]byte
+		var buf [1024]byte
 		n, err := reader.Read(buf[:])
 		if err != nil {
 			fmt.Printf("read from conn failed, err:%v\n", err)
 			break
 		}
-
-		recv := string(buf[:n])
-		fmt.Printf("收到的数据：%v\n", recv)
+		rev := string(buf[:n])
+		fmt.Printf("recived：%v\n", rev)
 
 		// 将接受到的数据返回给客户端
 		_, err = conn.Write([]byte("ok"))
@@ -34,7 +72,7 @@ func process(conn net.Conn) {
 	}
 }
 
-func TCPServer() {
+func TCPServer(p Process) {
 	// 建立 tcp 服务
 	listen, err := net.Listen("tcp", "127.0.0.1:8080")
 	if err != nil {
@@ -50,7 +88,7 @@ func TCPServer() {
 			continue
 		}
 		// 启动一个单独的 goroutine 去处理连接
-		go process(conn)
+		go p(conn)
 	}
 }
 
