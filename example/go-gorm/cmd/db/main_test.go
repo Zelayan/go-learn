@@ -22,5 +22,8 @@ func TestInitTable(t *testing.T) {
 		Age:      0,
 		Birthday: time.Time{},
 	})
+	db.Transaction(func(tx *gorm.DB) error {
+		return nil
+	})
 	check.Nil(err)
 }
