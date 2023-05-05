@@ -16,6 +16,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	// 往一个标准流中写
 	err = tmpl.Execute(os.Stdout, stu)
 	if err != nil {
 		panic(err)

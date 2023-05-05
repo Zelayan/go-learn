@@ -9,7 +9,6 @@ import (
 // Go 语言中的 context.Context 的主要作用还是在多个 Goroutine 组成的树中同步取消信号以减少对资源的消耗和占用，虽然它也有传值的功能，但是这个功能我们还是很少用到。
 //在真正使用传值的功能时 我们也应该非常谨慎，使用 context.Context 传递请求的所有参数一种非常差的设计，比较常见的使用场景是传递请求对应用户的认证令牌以及用于进行分布式追踪的请求 ID
 
-
 // Tip: 通过 cancel 主动关闭
 func ctxCancel() {
 	ctx, cancel := context.WithCancel(context.Background())
@@ -44,18 +43,15 @@ func ctxTimeout() {
 
 // Tip: 通过设置截止时间，触发time out
 func ctxDeadline() {
-	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(10*time.Millisecond))
-	defer cancel()
-	go func(ctx context.Context) {
+	ctx, _ := context.WithDeadline(context.Background(), time.Now().Add(10*time.Millisecond))
+	func() {
 		select {
 		case <-ctx.Done():
-			fmt.Println(ctx.Err())
+			fmt.Printf("context done: %v", ctx.Err())
 		case <-time.After(time.Millisecond * 100):
 			fmt.Println("Time out")
 		}
-	}(ctx)
-
-	time.Sleep(time.Second)
+	}()
 }
 
 // Tip: 用Key/Value传递参数，可以浅浅封装一层，转化为自己想要的结构体
